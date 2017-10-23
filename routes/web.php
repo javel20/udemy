@@ -11,7 +11,28 @@
 |
 */
 
+//clase 5 retornar vistas a la ruta
+Route::get('/', function () {
+    return view('home');
+})->name('home');
 
+Route::get('/contacto', function () {
+    return "Hola desde la página de contacto";
+})->name('contacto');
+
+Route::get('/saludos/{nombre?}', function ($nombre="Invitado"){
+    return view('saludo',['nombre'=> $nombre]);
+    //return view('saludo')->with(['nombre'=>$nombre]);
+    //return view('saludo',compact('nombre'));
+    //compact devolver un array asociativo con el nombre que le pasemos como llave
+    // y el valor de una variable existente del mismo nombre
+
+})->where('nombre',"[A-Za-z]+")->name('saludo');
+
+
+
+
+/*
 //clase 4 rutas
 Route::get('/', function () {
     return "Hola desde la página de inicio";
@@ -28,7 +49,7 @@ Route::get('/saludos/{nombre}', function ($nombre) {
 //paravalidar la variable nombre se utiliza ->where...
 // si se le da un nombre a la ruta se puede llamar con route('')
 
-/*
+
 si no quiere que {nombre} sea obligatorio
 Route::get('/saludos/{nombre?}', function($nombre= "Invitado") {
     return "Saludos $nombre";
