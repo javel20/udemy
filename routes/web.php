@@ -17,11 +17,20 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/contacto', function () {
-    return "Hola desde la página de contacto";
+    return view('contacto');
 })->name('contacto');
 
 Route::get('/saludos/{nombre?}', function ($nombre="Invitado"){
-    return view('saludo',['nombre'=> $nombre]);
+    
+    $consolas=[
+        
+        "play",
+        "Xbox",
+        "Wii"
+        
+    ];
+    
+    return view('saludo',['nombre'=> $nombre,'consolas'=>$consolas]);
     //return view('saludo')->with(['nombre'=>$nombre]);
     //return view('saludo',compact('nombre'));
     //compact devolver un array asociativo con el nombre que le pasemos como llave
