@@ -11,6 +11,13 @@
 |
 */
 
+//clase 7 controllers
+Route::get('/', 'PagesController@home')->name('home');
+Route::get('/contacto', 'PagesController@contacto')->name('contacto');
+Route::get('/saludos/{nombre?}', 'PagesController@saludo')->name('saludo')->where('nombre',"[A-Za-z]+");
+
+
+/*
 //clase 5 retornar vistas a la ruta
 Route::get('/', function () {
     return view('home');
@@ -38,7 +45,7 @@ Route::get('/saludos/{nombre?}', function ($nombre="Invitado"){
 
 })->where('nombre',"[A-Za-z]+")->name('saludo');
 
-
+*/
 
 
 /*
