@@ -11,8 +11,11 @@
 |
 */
 
+//class 8
+Route::post('contacto','PagesController@mensajes');
+
 //clase 7 controllers
-Route::get('/', 'PagesController@home')->name('home');
+Route::get('/', 'PagesController@home')->name('home');//->middleware('example');
 Route::get('/contacto', 'PagesController@contacto')->name('contacto');
 Route::get('/saludos/{nombre?}', 'PagesController@saludo')->name('saludo')->where('nombre',"[A-Za-z]+");
 
