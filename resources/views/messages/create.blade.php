@@ -10,7 +10,7 @@
     @else
 
 
-    <form method="POST" action="contacto">
+    <form method="POST" action={{ route('messages.store') }}>
     {{--<input type="hidden" name="_token" value="{{ crfs_token}}">--}}
     {{--para pasar el middleware se le agrega _token, hace una comparacion de token si son lo mismo da paso --}}
     
@@ -31,8 +31,8 @@
         {!! $errors->first('mensaje','<span class=error>:message</span>') !!}
     </label></p>
 
-    <input type="submit" value="Enviar">
-    </form>
+        <input type="submit" value="Enviar">
+        </form>
     @endif
 
 @stop

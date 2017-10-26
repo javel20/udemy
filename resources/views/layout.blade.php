@@ -29,7 +29,8 @@
             <a href="{{ route('home') }}">Inicio</a>
             {{-- <a class="{{ request->is('/') ? 'active' : '' }}" href="{{ route('home') }}">Inicio</a> --}}
             <a href="{{ route('saludo','javier') }}">Saludo</a>
-            <a href="{{ route('contacto') }}">Contacto</a>
+            <a href="{{ route('messages.create') }}">Contacto</a>
+            <a href="{{ route('messages.index') }}">Mensajes</a>
         </nav>
     </header>
 
