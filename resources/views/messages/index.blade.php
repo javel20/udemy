@@ -24,7 +24,7 @@
                 <tr>
 
                     <td>
-                        <a href="{{ route('messages.show',$message->id) }}">
+                        <a href="{{ route('mensajes.show',$message->id) }}">
                             {{ $message->nombre }}
                         </a>                        
                     </td>
@@ -32,7 +32,7 @@
                     <td>{{ $message->mensaje }}</td>
 
                     <td>
-                        <a href="{{ route('messages.edit', $message->id) }}">Editar</a>
+                        <a href="{{ route('mensajes.edit', $message->id) }}">Editar</a>
                         @include('messages.delete')
                     
                     </td>

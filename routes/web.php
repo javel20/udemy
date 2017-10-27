@@ -11,8 +11,11 @@
 |
 */
 
+//class 17
+Route::resource('mensajes','MessagesController');
+
 //class 15
-Route::get('mensajes/create', 'MessagesController@create')->name('messages.create');
+/*Route::get('mensajes/create', 'MessagesController@create')->name('messages.create');
 Route::get('mensajes', 'MessagesController@index')->name('messages.index');
 Route::post('mensajes', 'MessagesController@store')->name('messages.store');
 
@@ -20,7 +23,7 @@ Route::get('mensajes/{id}', 'MessagesController@show')->name('messages.show');
 Route::get('mensajes/{id}/edit', 'MessagesController@edit')->name('messages.edit');
 Route::put('mensajes/{id}', 'MessagesController@update')->name('messages.update');
 Route::delete('mensajes/{id}', 'MessagesController@destroy')->name('messages.destroy');
-
+*/
 
 //class 8
 Route::post('contacto','PagesController@mensajes');

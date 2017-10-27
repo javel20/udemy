@@ -1,4 +1,4 @@
-<form method="DELETE" action="{{ route('messages.destroy',$message->id)}}">
+<form method="POST" action="{{ route('mensajes.destroy',$message->id)}}">
 
     {!! csrf_field() !!}
     {!! method_field('DELETE') !!}
