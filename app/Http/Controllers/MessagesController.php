@@ -16,6 +16,13 @@ class MessagesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['create','store']]);
+    }
+
+
     public function index()
     {
         //$messages = DB::table('messages')->get();
@@ -114,7 +121,7 @@ class MessagesController extends Controller
 
 
         $message = Message::findOrFail($id);
-        Message::update($request->all());
+        $message->update($request->all());
         
         //dd($request->all());
         return redirect()->route('mensajes.index');

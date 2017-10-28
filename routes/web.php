@@ -26,11 +26,11 @@ Route::delete('mensajes/{id}', 'MessagesController@destroy')->name('messages.des
 */
 
 //class 8
-Route::post('contacto','PagesController@mensajes');
+//Route::post('contacto','PagesController@mensajes');
 
 //clase 7 controllers
 Route::get('/', 'PagesController@home')->name('home');//->middleware('example');
-Route::get('/contacto', 'PagesController@contacto')->name('contacto');
+//Route::get('/contacto', 'PagesController@contacto')->name('contacto');
 Route::get('/saludos/{nombre?}', 'PagesController@saludo')->name('saludo')->where('nombre',"[A-Za-z]+");
 
 
@@ -88,3 +88,16 @@ Route::get('/saludos/{nombre?}', function($nombre= "Invitado") {
     return "Saludos $nombre";
 });
 */
+/*
+route::get('test', function(){
+
+        $user = new App\User;
+        $user->nombre = 'javier'
+        $user->save();
+        return $user;
+
+});
+*/
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

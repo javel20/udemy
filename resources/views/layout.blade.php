@@ -31,6 +31,24 @@
             <a href="{{ route('saludo','javier') }}">Saludo</a>
             <a href="{{ route('mensajes.create') }}">Contacto</a>
             <a href="{{ route('mensajes.index') }}">Mensajes</a>
+
+            @if(auth()->guest())
+            {{--devuelve un boolean de v o f,si es un usuario invitado le monstramos login--}}
+                <a href="/login">login</a>
+            @endif
+
+            @if(auth()->check())
+            {{--si existe un usuario authenticado actualmente--}}
+                <a href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                    Logout
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                </form>
+            @endif
         </nav>
     </header>
 
