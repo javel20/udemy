@@ -2,7 +2,7 @@
 @section('contenido')
 
     <h1>Todos los mensajes</h1>
-    <table>
+    <table class="table">
     
         <thead>
         
@@ -32,7 +32,7 @@
                     <td>{{ $message->mensaje }}</td>
 
                     <td>
-                        <a href="{{ route('mensajes.edit', $message->id) }}">Editar</a>
+                        <a class="btn btn-info btn-xs" href="{{ route('mensajes.edit', $message->id) }}">Editar</a>
                         @include('messages.delete')
                     
                     </td>
