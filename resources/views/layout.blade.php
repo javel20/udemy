@@ -46,7 +46,7 @@
         @if(auth()->check())
             <li><a href="{{ route('mensajes.index') }}">Mensajes</a></li>
             {{--@if(auth()->user()->role === 'admin')--}}
-            @if(auth()->user()->hasRoles('admin'))
+            @if(auth()->user()->hasRoles(['admin']))
                 <li><a href="{{ route('usuarios.index') }}">Usuarios</a></li>
             @endif
         @endif

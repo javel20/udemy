@@ -29,7 +29,7 @@
                         </a>                        
                     </td>
                     <td>{{ $user->email }}</td>
-                    <td>{{ $user->role }}</td>
+                    <td>{{ $user->role->display_name }}</td>
 
                     <td>
 

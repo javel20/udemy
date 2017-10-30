@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'role', 'password',
+        'name', 'email', 'role_id', 'password',
     ];
 
     /**
@@ -27,11 +27,16 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function hasRoles(array $role){
+    //uno a uno user role
+    public function role(){
+        return $this->belongsTo(Role::class);
+    }
+
+    public function hasRoles(array $roles){
         
         foreach($roles as $role)
         {
-            if($this->role = $role){
+            if($this->role->name == $role){
             
                 return true;
             //$this = App\User;
