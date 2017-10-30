@@ -13,6 +13,17 @@
 
 //class 17
 Route::resource('mensajes','MessagesController');
+Route::resource('usuarios','UsersController');
+
+/*
+class 21
+App\User::create([
+    'name' => 'javier',
+    'email'=> 'javier@gmail.com',
+    'password' => bcrypt('javier'),
+    'role' => 'admin'
+]);
+*/
 
 //class 15
 /*Route::get('mensajes/create', 'MessagesController@create')->name('messages.create');

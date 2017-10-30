@@ -42,7 +42,14 @@
 
         <li><a href="{{ route('saludo','javier') }}">Saludo</a></li>
         <li><a href="{{ route('mensajes.create') }}">Contacto</a></li>
-        <li><a href="{{ route('mensajes.index') }}">Mensajes</a></li>
+
+        @if(auth()->check())
+            <li><a href="{{ route('mensajes.index') }}">Mensajes</a></li>
+            {{--@if(auth()->user()->role === 'admin')--}}
+            @if(auth()->user()->hasRoles('admin'))
+                <li><a href="{{ route('usuarios.index') }}">Usuarios</a></li>
+            @endif
+        @endif
 
       </ul>
      
@@ -51,31 +58,27 @@
         @if(auth()->guest())
             {{--devuelve un boolean de v o f,si es un usuario invitado le monstramos login--}}
                 <li><a href="{{ route('login') }}">login</a></li>
-            @endif
+        @endif
 
-            @if(auth()->check())
-            {{--si existe un usuario authenticado actualmente--}}
+        @if(auth()->check())
+        {{--si existe un usuario authenticado actualmente--}}
+        <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ auth()->user()->name }}<span class="caret"></span></a>
+            <ul class="dropdown-menu">
                 <li><a href="{{ route('logout') }}"
                     onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
                     Logout
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
                 </a></li>
+                </ul>
+            </li>   
 
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    {{ csrf_field() }}
-                </form>
-            @endif
+        @endif
 
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
