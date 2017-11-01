@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 
 class UsersController extends Controller
 {
@@ -15,7 +16,8 @@ class UsersController extends Controller
     public function __construct(){
         
                 //$this->middleware('example');
-                $this->middleware(['auth','roles:admin']);
+                $this->middleware(['auth']);
+                $this->middleware('roles:admin', ['except' => ['edit','update']]);
                 //$this->middleware('example')->except('home');
         
     }
@@ -47,7 +49,11 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'name' => 'required|min:3|max:60|regex:/^[óáéíúña-z-\s]+$/i',
+            'password' => 'required',
+            'email' => 'required|max:60|email|unique:users,email,',
+        ]);
     }
 
     /**
@@ -69,7 +75,9 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        
+        $user = User::findOrFail($id);
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -81,7 +89,16 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'name' => 'required|min:3|max:60|regex:/^[óáéíúña-z-\s]+$/i',
+            'email' => 'required|max:60|email|unique:users,id,'.$request->route('usuarios'),
+        ]);
+        
+        $user = User::findOrFail($id);
+        $user->update($request->all());
+        
+        //dd($request->all());
+        return redirect()->route('usuarios.index');
     }
 
     /**
@@ -92,6 +109,7 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id)->delete();
+        return redirect()->route('usuarios.index');
     }
 }

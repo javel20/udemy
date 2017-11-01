@@ -24,7 +24,7 @@
                 <tr>
 
                     <td>
-                        <a href="{{ route('mensajes.show',$user->id) }}">
+                        <a href="{{ route('usuarios.show',$user->id) }}">
                             {{ $user->name }}
                         </a>                        
                     </td>
@@ -36,9 +36,10 @@
                     </td>
 
                     <td>
-
-                    
+                        <a class="btn btn-info btn-xs" href="{{ route('usuarios.edit', $user->id) }}">Editar</a>
+                        @include('users.delete')
                     </td>
+                    
                 </tr>
 
             @endforeach
