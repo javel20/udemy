@@ -46,18 +46,23 @@ class User extends Authenticatable
         
         foreach($roles as $role)
         {
-            foreach($this->roles as $userRole){
+            //con collective
+            //tenemos todos los nombres de los roles y con contains preguntamos si contiene alguno de los roles que recibimos por aqui
+            //intersect siempre duvuelve un array, count para que devuelva 1 o mas si existen intersecciones true, si no hay 0 false
+            return $this->roles->pluck('name')->intersect($roles)->count();
+
+            //sin collective
+            //foreach($this->roles as $userRole){
                 //dd($this->roles);
+                //if($userRole->name == $role){
                 
-                if($userRole->name == $role){
-                
-                    return true;
+                  //  return true;
                 //$this = App\User;
-                }
-            }
+                //}
+            //}
         }
 
-        return false;
+       // return false;
         
     }
 
