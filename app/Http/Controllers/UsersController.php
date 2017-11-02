@@ -16,8 +16,8 @@ class UsersController extends Controller
     public function __construct(){
         
                 //$this->middleware('example');
-                $this->middleware(['auth']);
-                $this->middleware('roles:admin', ['except' => ['edit','update']]);
+                $this->middleware('auth', ['except'=>['show']]);
+                $this->middleware('roles:admin', ['except' => ['edit','update','show']]);
                 //$this->middleware('example')->except('home');
         
     }
@@ -64,7 +64,9 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        //
+        //$user = DB::table('users')->where('id',$id)->first();
+        $user = User::findOrFail($id);
+        return view('users.show',compact('user'));
     }
 
     /**
@@ -77,6 +79,9 @@ class UsersController extends Controller
     {
         
         $user = User::findOrFail($id);
+
+        $this->authorize('edit',$user);
+
         return view('users.edit', compact('user'));
     }
 
@@ -95,9 +100,13 @@ class UsersController extends Controller
         ]);
         
         $user = User::findOrFail($id);
+
+        $this->authorize('update',$user);
+        
         $user->update($request->all());
         
         //dd($request->all());
+
         return redirect()->route('usuarios.index');
     }
 
@@ -109,7 +118,12 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::findOrFail($id)->delete();
+        $user = User::findOrFail($id);
+
+        $this->authorize('destroy',$user);
+
+        $user->delete();
+
         return redirect()->route('usuarios.index');
     }
 }
