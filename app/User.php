@@ -27,6 +27,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function messages(){
+        //para que sepa el nombre de la tabla pivot se pone como segundo parametro
+        return $this->hasMany(Message::class);
+    }
+
     /*
     //uno a uno user role
     public function role(){
@@ -46,7 +51,7 @@ class User extends Authenticatable
         
         foreach($roles as $role)
         {
-            //con collective
+            //con colleccion
             //tenemos todos los nombres de los roles y con contains preguntamos si contiene alguno de los roles que recibimos por aqui
             //intersect siempre duvuelve un array, count para que devuelva 1 o mas si existen intersecciones true, si no hay 0 false
             return $this->roles->pluck('name')->intersect($roles)->count();

@@ -15,24 +15,10 @@
     {{--para pasar el middleware se le agrega _token, hace una comparacion de token si son lo mismo da paso --}}
     
     {!! csrf_field() !!} {{--reemplaza el input _token--}}
+
+    @include('messages.form')
     
-    <p><label for="nombre">Nombre
-        <input class="form-control" type="text" name="nombre" value="{{ old('nombre') }}">
-        {!! $errors->first('nombre','<span class=error>:message</span>') !!}
-    </label></p>
-
-    <p><label for="email">Email
-        <input class="form-control" type="email" name="email"  value="{{ old('email') }}">
-        {!! $errors->first('email','<span class=error>:message</span>') !!}
-    </label></p>
-
-    <p><label for="mensaje">Mensaje
-        <textarea class="form-control" name="mensaje"> {{ old('mensaje') }} </textarea>
-        {!! $errors->first('mensaje','<span class=error>:message</span>') !!}
-    </label></p>
-
-        <input class="btn btn-primary" type="submit" value="Enviar">
-        </form>
+    </form>
     @endif
 
 @stop

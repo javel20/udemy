@@ -22,15 +22,21 @@
             @foreach($messages as $message)
 
                 <tr>
+                    @if($message->user_id)
+                        <td>
+                            <a href="{{ route('usuarios.show',$message->user_id) }}">
+                                {{ $message->user->name }}</td>
+                            </a>
+                        <td>{{ $message->user->email }}</td>
+                    @else
+                    <td>{{ $message->nombre }}</td>
+                    <td>{{ $message->email }}</td>
+                    @endif
 
                     <td>
                         <a href="{{ route('mensajes.show',$message->id) }}">
-                            {{ $message->nombre }}
-                        </a>                        
-                    </td>
-                    <td>{{ $message->email }}</td>
-                    <td>{{ $message->mensaje }}</td>
-
+                            {{ $message->mensaje }}</td>
+                        </a>
                     <td>
                         <a class="btn btn-info btn-xs" href="{{ route('mensajes.edit', $message->id) }}">Editar</a>
                         @include('messages.delete')

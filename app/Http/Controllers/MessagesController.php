@@ -69,8 +69,22 @@ class MessagesController extends Controller
         $message->mensaje = $request->mensaje;
         $message->save();
         */
+        
+            
+        //class 27 con el user_id
+        //save para asignar el usuario a un mensaje que ya a sido guardado
+        $message = Message::create($request->all());
 
-        Message::create($request->all());
+        if(auth()->check()){
+            auth()->user()->messages()->save($message);
+        }
+
+        //solo para usuarios autenticados
+        auth()->user()->messages()->create($request->all());
+
+        //otro, se le asigna el user_id y se guarda
+        $message->user_id = auth()->id();
+        $message->save();
 
         return redirect()->route('mensajes.index');
     }
