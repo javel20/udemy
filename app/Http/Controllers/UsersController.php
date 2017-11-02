@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Role;
 
 class UsersController extends Controller
 {
@@ -38,7 +39,9 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        $user = new User;
+        $roles = Role::pluck('display_name','id');
+        return view('users.create', compact('roles','user'));
     }
 
     /**
@@ -49,11 +52,18 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
+        //return $request->all();
         $this->validate($request,[
-            'name' => 'required|min:3|max:60|regex:/^[óáéíúña-z-\s]+$/i',
-            'password' => 'required',
-            'email' => 'required|max:60|email|unique:users,email,',
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,',
+            'password' => 'required|confirmed',
+            'roles' => 'required',
         ]);
+
+        $user = User::create($request->all());
+        $user->roles()->attach($request->roles);
+        return redirect()->route('usuarios.index');
+
     }
 
     /**
@@ -82,7 +92,9 @@ class UsersController extends Controller
 
         $this->authorize('edit',$user);
 
-        return view('users.edit', compact('user'));
+        $roles = Role::pluck('display_name','id');
+
+        return view('users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -100,12 +112,17 @@ class UsersController extends Controller
         ]);
         
         $user = User::findOrFail($id);
-
+        
         $this->authorize('update',$user);
         
-        $user->update($request->all());
+        //$user->update($request->all());
+        $user->update($request->only('name','email'));
         
-        //dd($request->all());
+        //agrega los nuevos roles y si ya esta agregado los duplica
+        //$user->roles()->attach($request->roles);
+
+        //mantiene sincronizados los roles sin duplicaciones
+        $user->roles()->sync($request->roles);
 
         return redirect()->route('usuarios.index');
     }

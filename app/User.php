@@ -27,8 +27,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function setPasswordAttribute($password){
+        $this->attributes['password'] = bcrypt($password);
+    }
+
     public function messages(){
-        //para que sepa el nombre de la tabla pivot se pone como segundo parametro
         return $this->hasMany(Message::class);
     }
 
