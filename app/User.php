@@ -27,6 +27,12 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function note(){
+        
+        return $this->morphOne(Note::class,'notable');
+        
+    }
+
     public function setPasswordAttribute($password){
         $this->attributes['password'] = bcrypt($password);
     }

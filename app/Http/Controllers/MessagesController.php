@@ -42,6 +42,7 @@ class MessagesController extends Controller
      */
     public function create()
     {
+        $message = new Message;
         return view('messages.create');
     }
 
@@ -79,8 +80,10 @@ class MessagesController extends Controller
             auth()->user()->messages()->save($message);
         }
 
+        /*
         //solo para usuarios autenticados
         auth()->user()->messages()->create($request->all());
+        */
 
         //otro, se le asigna el user_id y se guarda
         $message->user_id = auth()->id();

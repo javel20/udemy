@@ -11,6 +11,7 @@
                 <th>Nombre</th>
                 <th>Email</th>
                 <th>Mensaje</th>
+                <th>Notas</th>
                 <th>Acciones</th>
             
             </tr>
@@ -35,8 +36,11 @@
 
                     <td>
                         <a href="{{ route('mensajes.show',$message->id) }}">
-                            {{ $message->mensaje }}</td>
+                            {{ $message->mensaje }}
                         </a>
+                    </td>
+                        {{--sale error con {{ $message->note->body }} se le añade optional para evitarlo--}}
+                        <td>{{ optional( $message->note )->body }}</td>
                     <td>
                         <a class="btn btn-info btn-xs" href="{{ route('mensajes.edit', $message->id) }}">Editar</a>
                         @include('messages.delete')
