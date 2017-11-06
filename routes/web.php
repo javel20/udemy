@@ -11,7 +11,7 @@
 |
 */
 
-
+/*
 //class 31 - mostrar todas las consultas que se ejecutan en la pagina
 DB::listen(function($query){
 
@@ -19,7 +19,7 @@ DB::listen(function($query){
         //echo "<pre>{$query->time}</pre>";
 
 });
-
+*/
 
 //class 17
 Route::resource('mensajes','MessagesController');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use DB;
+use Mail;
 use Carbon\Carbon;
 
 use App\Message;
@@ -95,6 +96,10 @@ class MessagesController extends Controller
         //(4)otro, se le asigna el user_id y se guarda
         $message->user_id = auth()->id();
         $message->save();
+
+        Mail::send('emails.contact', ['msg' => $message], function($m) use ($message){
+            $m->to($message->email, $message->nombre)->subject('Tu mensaje fue recibido');
+        });
 
         return redirect()->route('mensajes.index');
     }
