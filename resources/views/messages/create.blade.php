@@ -11,12 +11,11 @@
 
 
     <form method="POST" action={{ route('mensajes.store') }}>
-    {{--<input type="hidden" name="_token" value="{{ crfs_token}}">--}}
-    {{--para pasar el middleware se le agrega _token, hace una comparacion de token si son lo mismo da paso --}}
-    
-    {!! csrf_field() !!} {{--reemplaza el input _token--}}
 
-    @include('messages.form')
+
+    @include('messages.form',['message' => new App\Message])
+
+
     
     </form>
     @endif

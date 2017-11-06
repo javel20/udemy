@@ -27,6 +27,16 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+
+
+    //relacion porlimorfica de muchos a muchos
+    public function tags(){
+        
+        return $this->morphToMany(Tag::class, 'taggable')->withTimestamps();
+    
+    }
+
+    //relacion polimorfica uno a uno
     public function note(){
         
         return $this->morphOne(Note::class,'notable');

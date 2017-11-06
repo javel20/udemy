@@ -42,7 +42,7 @@ class MessagesController extends Controller
      */
     public function create()
     {
-        $message = new Message;
+        //$message = new Message;
         return view('messages.create');
     }
 
@@ -64,7 +64,7 @@ class MessagesController extends Controller
         ]);*/
 
         //class 17
-        /*$message = New Message;
+        /*(1)$message = New Message;
         $message->nombre = $request->nombre;
         $message->email = $request->email;
         $message->mensaje = $request->mensaje;
@@ -73,19 +73,22 @@ class MessagesController extends Controller
         
             
         //class 27 con el user_id
-        //save para asignar el usuario a un mensaje que ya a sido guardado
+        //(2)(3)(4)save para asignar el usuario a un mensaje que ya a sido guardado
         $message = Message::create($request->all());
 
+        /*
+        //(2)para asignarle este usuario a un mensaje que ya a sido ingresado anteriormente
+        //enviar usuarios para usuarios autenticas y no autenticados
         if(auth()->check()){
             auth()->user()->messages()->save($message);
-        }
+        }*/
 
         /*
         //solo para usuarios autenticados
-        auth()->user()->messages()->create($request->all());
+        (3)auth()->user()->messages()->create($request->all());
         */
 
-        //otro, se le asigna el user_id y se guarda
+        //(4)otro, se le asigna el user_id y se guarda
         $message->user_id = auth()->id();
         $message->save();
 

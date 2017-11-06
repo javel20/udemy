@@ -9,7 +9,15 @@ class Message extends Model
     protected $fillable =  ['nombre','email','mensaje','user_id'];
     
 
-    //relacion polimorfica
+    //relacion polimorfica de muchos a muchos
+    public function tags(){
+
+        return $this->morphToMany(Tag::class, 'taggable');
+
+    }
+
+
+    //relacion polimorfica uno a uno
     public function note(){
         
         return $this->morphOne(Note::class,'notable');
