@@ -5,10 +5,11 @@
     {!! csrf_field() !!} {{--reemplaza el input _token--}}
 
 
-@unless($message->user_id)
 {{--
+@unless($message->user_id)
 isset, si la variable $message esta definida
-unless a menos que mensaje tenga un id--}}
+unless a menos que mensaje tenga un id --}}
+@if($showFields)
 
         <p><label for="nombre">Nombre
             <input class="form-control" type="text" name="nombre" value="{{ isset($message->nombre) ? $message->nombre : old('nombre') }}">
@@ -19,8 +20,9 @@ unless a menos que mensaje tenga un id--}}
             <input class="form-control" type="email" name="email"  value="{{ isset($message->email) ? $message->email : old('email') }}">
             {!! $errors->first('email','<span class=error>:message</span>') !!}
         </label></p>
+@endif
 
-@endunless
+{{-- @endunless --}}
     
     <p><label for="mensaje">Mensaje
         <textarea class="form-control" name="mensaje">{{ isset($message->mensaje) ? $message->mensaje : old('mensaje') }}</textarea>

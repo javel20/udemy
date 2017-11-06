@@ -25,10 +25,14 @@ class MessagesController extends Controller
 
     public function index()
     {
+        
+        //class 31 optimizar consultas
+        $messages = Message::with(['user','note','tags'])->get();
+        
         //$messages = DB::table('messages')->get();
         
         //class 17
-        $messages = Message::all();
+        //$messages = Message::all();
         return view('messages.index')->with([
             'messages' => $messages
         ]);

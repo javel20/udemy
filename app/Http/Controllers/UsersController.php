@@ -27,7 +27,10 @@ class UsersController extends Controller
     public function index()
     {
 
-        $users = \App\User::All();
+        //class 31 optimizar consultas
+        $users = User::with(['roles','note','tags'])->get();
+
+        //$users = \App\User::All();
         return view('users.index',compact('users'));
 
     }
