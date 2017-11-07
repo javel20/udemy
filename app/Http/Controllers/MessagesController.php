@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use DB;
 use Mail;
 use Carbon\Carbon;
+use App\Events\MessageWasReceived;
 
 use App\Message;
 
@@ -97,9 +98,10 @@ class MessagesController extends Controller
         $message->user_id = auth()->id();
         $message->save();
 
-        Mail::send('emails.contact', ['msg' => $message], function($m) use ($message){
-            $m->to($message->email, $message->nombre)->subject('Tu mensaje fue recibido');
-        });
+        //class34:eventos, el nombre es en pasado: su mensaje a sido recibido
+        event(new MessageWasReceived($message));
+
+        //el codigo del email se paso al listener
 
         return redirect()->route('mensajes.index');
     }
