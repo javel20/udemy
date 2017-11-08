@@ -8,6 +8,7 @@ use DB;
 use Mail;
 use Carbon\Carbon;
 use App\Events\MessageWasReceived;
+use Illuminate\Support\Facades\Cache;
 
 use App\Message;
 
@@ -27,12 +28,45 @@ class MessagesController extends Controller
 
     public function index()
     {
+
+        /*
+
+        //class40 otro metodo de almacenar la cache, si existe en la cache o no
+
+        $key = "messages.page" . request('page',1);
+        
+        $messages = Cache::remember($key, 5, function(){
+        //sin tiempo limite $messages = Cache::rememberForever($key, function(){ 
+            return Message::with(['user','note','tags'])->paginate(10);
+        ]);
+
+        });
+        return view('messages.index')->with([
+            'messages' => $messages
+        ]);
+
+        */
+
+        //class 40
+        //cuando estemos en la pagina uno estara en messages.page.1 sucesivamente
+        $key = "messages.page" . request('page',1);
+        if(Cache::has($key)){
+
+            $messages = Cache::get($key);
+
+        }else{
         
         //class 31 optimizar consultas
-        $messages = Message::with(['user','note','tags'])->get();
+        $messages = Message::with(['user','note','tags'])->paginate(10);
         
         //$messages = DB::table('messages')->get();
         
+        //class 40
+        //$message laravel lo convierte a json para guardarlo en la cache
+        Cache::put($key, $messages, 5);
+
+        }
+
         //class 17
         //$messages = Message::all();
         return view('messages.index')->with([
@@ -98,6 +132,10 @@ class MessagesController extends Controller
         $message->user_id = auth()->id();
         $message->save();
 
+        //class40:cache
+        Cache::flush();
+
+
         //class34:eventos, el nombre es en pasado: su mensaje a sido recibido
         event(new MessageWasReceived($message));
 
@@ -114,6 +152,13 @@ class MessagesController extends Controller
      */
     public function show($id)
     {
+        /*
+        //class 40:cache
+        $message = Cache::remember("messages.{id}",5,function() use($id){
+            return Message::findOrFail($id);
+        })
+        */
+
         //$message = DB::table('messages')->where('id',$id)->first();
         $message = Message::findOrFail($id);
         return view('messages.show',compact('message'));
@@ -127,6 +172,14 @@ class MessagesController extends Controller
      */
     public function edit($id)
     {
+
+        /*
+        //class 40:cache
+        $message = Cache::remember("messages.{id}",5,function() use($id){
+            return Message::findOrFail($id);
+        })
+        */
+
         //$message = DB::table('messages')->where('id', $id)->first();
         $message = Message::findOrFail($id);
         return view('messages.edit', compact('message'));
@@ -153,7 +206,7 @@ class MessagesController extends Controller
 
         $message = Message::findOrFail($id);
         $message->update($request->all());
-        
+        Cache::flush();
         //dd($request->all());
         return redirect()->route('mensajes.index');
     }
@@ -169,6 +222,7 @@ class MessagesController extends Controller
         //return "eliminar";
         //DB::table('messages')->where('id',$id)->delete();
         $message = Message::findOrFail($id)->delete();
+        Cache::flush();
         return redirect()->route('mensajes.index');
     }
 }
