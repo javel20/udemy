@@ -27,6 +27,10 @@
                 <tr>
 
                     <td>
+                    {{--class 44: views present
+                    {{ $user->present()->link() }}
+                    --}}
+
                         <a href="{{ route('usuarios.show',$user->id) }}">
                             {{ $user->name }}
                         </a>                        
@@ -34,6 +38,9 @@
                     <td>{{ $user->email }}</td>
                     {{--con collective, implode es un separador--}}
                     <td>
+                        {{--class 44: views present
+                        {!! $user->present()->roles() !!} 
+                        --}}
                         {{ $user->roles->pluck('display_name')->implode(' - ') }}
                     </td>
 
@@ -46,8 +53,16 @@
                     --}}
 
                     {{--sale error con {{ $message->note->body }} se le añade optional para evitarlo--}}
-                    <td>{{ optional($user->note)->body }}</td>
-                    <td>{{ optional($user->tags)->pluck('name')->implode(', ') }}</td>
+                    <td>
+                    {{--class 44: views present
+                        {!! $user->present()->notes() !!} 
+                        --}}
+                    {{ optional($user->note)->body }}</td>
+                    <td>
+                    {{--class 44: views present
+                        {!!  $user->present()->tags() !!} 
+                        --}}
+                    {{ optional($user->tags)->pluck('name')->implode(', ') }}</td>
 
                     <td>
                         <a class="btn btn-info btn-xs" href="{{ route('usuarios.edit', $user->id) }}">Editar</a>

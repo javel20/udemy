@@ -5,18 +5,23 @@ namespace App\Repositories;
 use App\Message;
 use Illuminate\Support\Facades\Cache;
 
-class Messages{
+class Messages implements MessagesInterface{
+
+    //interactuca unicamente con la base de datos, si utilizas decoradores o interfaces
+    //solo dejar lo de la base, la cache eliminarla ya que creamos CacheMessages.php
 
     public function getIndex(){
 
-        //class40 otro metodo de almacenar la cache, si existe en la cache o no
+        //class40.2 otro metodo de almacenar la cache, si existe en la cache o no
 
         $key = "messages.page" . request('page',1);
         
         //para redis
         //$messages = Cache::tags('messages')->remember($key, 5, function(){
 
+        //remember = si la llave existe devuelve el valor $messages, si no existe almacena lo que devuelve la function
         //$messages = Cache::remember($key, 5, function(){
+
         //sin tiempo limite
         return Cache::rememberForever($key, function(){
             return Message::with(['user','note','tags'])

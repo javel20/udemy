@@ -24,6 +24,9 @@
             @foreach($messages as $message)
 
                 <tr>
+                    {{--class 44: views present
+                    {{ $message->present()->userName() }} 
+                    --}}
                     @if($message->user_id)
                         <td>
                             <a href="{{ route('usuarios.show',$message->user_id) }}">
@@ -36,9 +39,12 @@
                     @endif
 
                     <td>
+                    {{--class 44: views present
+                    {{ $message->present()->link() }} 
+                    --}}
                         <a href="{{ route('mensajes.show',$message->id) }}">
                             {{ $message->mensaje }}
-                        </a>
+                     
                     </td>
                         {{--sale error con {{ $message->note->body }} se le añade optional para evitarlo--}}
                         <td>{{ optional( $message->note )->body }}</td>

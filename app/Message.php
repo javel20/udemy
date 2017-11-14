@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Presenters\MessagePresenter;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
@@ -36,6 +38,11 @@ class Message extends Model
         
         return $this->belongsTo(User::class);
         
+    }
+
+    public function present(){
+        //$this es el objeto message actual
+        return new MessagePresenter($this);
     }
     
 }

@@ -21,6 +21,8 @@ class MessagesController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    // si queremos utilizar decorador cambiamos la clase Messages a CacheMessages
+
      protected $messages;
 
     public function __construct(Messages $messages)
@@ -42,7 +44,7 @@ class MessagesController extends Controller
         
 
         /*
-        //class 40
+        //class 40.1
         //cuando estemos en la pagina uno estara en messages.page.1 sucesivamente
         $key = "messages.page" . request('page',1);
         if(Cache::has($key)){

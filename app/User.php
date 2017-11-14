@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Presenters\UserPresenter;
+
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -117,4 +119,9 @@ class User extends Authenticatable
 
     }
     */
+
+    public function present(){
+        //$this es el objeto message actual
+        return new UserPresenter($this);
+    }
 }
