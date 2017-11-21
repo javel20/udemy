@@ -10,7 +10,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class MessageWasReceived
+class MessageWasReceived implements ShouldBroadcast
 {
 
     public $message;
@@ -34,6 +34,6 @@ class MessageWasReceived
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-name');
+        return new Channel('messages-channel');
     }
 }

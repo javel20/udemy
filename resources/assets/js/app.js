@@ -20,3 +20,19 @@ Vue.component('example', require('./components/Example.vue'));
 const app = new Vue({
     el: '#app'
 });
+
+import Echo from "laravel-echo"
+import io from "socket.io-client"
+
+window.io = io
+//window.Pusher = require('pusher-js');
+
+let e = new Echo({
+    broadcaster: 'socket.io',
+    host:  window.location.hostname + ':6001'
+});
+
+e.channel('messages-channel')
+    .listen('MessageWasReceived', (e) => {
+        console.log(e);
+    })
