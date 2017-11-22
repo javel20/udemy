@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Mail\MensajeRecibido;
 use Mail;
 
 use App\Events\MessageWasReceived;
@@ -28,6 +29,17 @@ class SendNotificationToTheOwner implements ShouldQueue
      */
     public function handle(MessageWasReceived $event)
     {
+        $message = $event->message;
+
+        if(auth()->check()){
+            $message->email = auth()->user()->email;
+            $message->nombre = auth()->user()->name;
+        }
+
+        //class62
+        Mail::to('javier_el_balla@hotmail.com','javier elias')->send(new MensajeRecibido($message));
+
+        /*
         //notificar al dueño
         $message = $event->message;
         Mail::send('emails.contact', ['msg' => $message], function($m) use ($message){
@@ -35,5 +47,6 @@ class SendNotificationToTheOwner implements ShouldQueue
                 ->to('javier_el_balla@hotmail.com','javier elias')
                 ->subject('Tu mensaje fue recibido');
         });
+        */
     }
 }
