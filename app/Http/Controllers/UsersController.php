@@ -61,9 +61,16 @@ class UsersController extends Controller
             'email' => 'required|email|unique:users,email,',
             'password' => 'required|confirmed',
             'roles' => 'required',
+            'avatar' => 'required|image',
         ]);
 
-        $user = User::create($request->all());
+        $user = (new User)->fill($request->all());
+        //user = User::create($request->all());
+
+        //if($request->hasFile('avatar')){
+            $user->avatar = $request->file('avatar')->store('public');
+        //}
+        $user->save();
         $user->roles()->attach($request->roles);
         return redirect()->route('usuarios.index');
 
@@ -109,15 +116,22 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //dd($request->file('avatar'));
+
         $this->validate($request,[
             'name' => 'required|min:3|max:60|regex:/^[óáéíúña-z-\s]+$/i',
-            'email' => 'required|max:60|email|unique:users,id,'.$request->route('usuarios'),
+            'email' => 'required|max:60|email|unique:users,id,'.$request->route('usuario'),
+            'avatar' => 'image',
         ]);
         
         $user = User::findOrFail($id);
         
         $this->authorize('update',$user);
-        
+
+        if($request->hasFile('avatar')){
+            $user->avatar = $request->file('avatar')->store('public');
+        }
+
         //$user->update($request->all());
         $user->update($request->only('name','email'));
         

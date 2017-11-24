@@ -3,7 +3,7 @@
 <h1>Crear Usuario</h1>
 
 
-<form method="POST" action={{ route('usuarios.store') }}>
+<form method="POST" action={{ route('usuarios.store') }}  enctype="multipart/form-data" >
 
 
     @include('users.form')

@@ -1,6 +1,11 @@
 
 {!! csrf_field() !!} {{--reemplaza el input _token--}}
 
+    <p><label for="avatar">
+        <input class="" type="file" name="avatar">
+        {!! $errors->first('avatar','<span class=error>:message</span>') !!}
+    </label></p>
+
     <p><label for="nombre">Nombre
         <input class="form-control" type="text" name="name" value="{{ isset($user->name) ? $user->name : old('name') }}">
         {!! $errors->first('name','<span class=error>:message</span>') !!}
